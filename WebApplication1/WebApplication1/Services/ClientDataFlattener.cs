@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
 
-namespace WebApplication1.Domain
+namespace WebApplication1.Services
 {
     public static class ClientDataFlattener
     {

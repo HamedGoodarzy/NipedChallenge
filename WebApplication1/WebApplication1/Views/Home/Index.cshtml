@@ -20,20 +20,19 @@
         <div><i class="bi bi-info-circle-fill text-info"></i> @ViewBag.Message</div>
     </div>
 }
-<div class="text-center">
-    <form method="post" enctype="multipart/form-data" asp-action="Index">
-        <input type="file" name="files" multiple accept=".json" />
-        <button class="btn btn-primary" type="submit">Upload</button>
-    </form>
-</div>
-
 
 <div class="row">
     <div class="col">
         <div class="card bg-transparent-at">
             <div class="card-header">
-                <div class="fw-medium">
-                    clients Report
+                <div class="fw-bolder">
+                    Clients Report
+                <div class="text-center float-end">
+                <form method="post" enctype="multipart/form-data" asp-action="Index">
+                    <input type="file" name="files" multiple accept=".json" />
+                    <button class="btn btn-primary" type="submit">Process</button>
+                </form>
+                </div>
                 </div>
             </div>
             <div class="card-body pt-1 pb-1">

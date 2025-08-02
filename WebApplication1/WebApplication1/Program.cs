@@ -1,7 +1,12 @@
+using WebApplication1.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ReportProvider>();
+
 
 var app = builder.Build();
 

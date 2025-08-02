@@ -1,6 +1,6 @@
 ﻿using WebApplication1.Models;
 
-namespace WebApplication1.Domain
+namespace WebApplication1.Services
 {
     public static class RuleEvaluator
     {

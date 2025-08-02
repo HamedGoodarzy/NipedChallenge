@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using WebApplication1.Domain;
-using WebApplication1.Models;
+﻿using WebApplication1.Models;
 
-namespace WebApplication1.Utilities
+namespace WebApplication1.Services
 {
     public class ReportGenerator
     {
