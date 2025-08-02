@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models
+﻿using WebApplication1.Models;
+
+namespace WebApplication1.Domain
 {
     public static class RuleEvaluator
     {
