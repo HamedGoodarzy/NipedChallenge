@@ -4,6 +4,7 @@ using System.Text.Json;
 using WebApplication1.Domain;
 using WebApplication1.Models;
 using WebApplication1.Utilities;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
@@ -48,44 +49,22 @@ namespace WebApplication1.Controllers
             };
 
             var clientList = JsonSerializer.Deserialize<ClientList>(clientsJson, options) ?? throw new Exception("processing clientData encountered an error!");
-            //var firstClient = clientList.Clients.First();
-            //var flattenedClient = ClientDataFlattener.Flatten(firstClient.MedicalData);
-
-            //foreach (var client in clientList.Clients)
-            //{
-            //    var data = ClientDataFlattener.Flatten(client.MedicalData);
-            //    Console.WriteLine($"--- {client.Name} ---");
-            //    foreach (var item in data)
-            //        Console.WriteLine($"{item.Key}: {item.Value}");
-            //}
-
-            //var generator = new ReportGenerator(guidelineSet);
-            //var report = generator.GenerateReport(flattenedClient);
-
             var generator = new ReportGenerator(guidelineSet);
+            List<ClientReportVM> clientsReport = new List<ClientReportVM>();
             foreach (var client in clientList.Clients)
             {
-                Console.WriteLine($"Report for {client.Name}:");
+                ClientReportVM clientReportVM = new ClientReportVM();
+                clientReportVM.Client = client;
                 var flattenedClient = ClientDataFlattener.Flatten(client.MedicalData);
                 var report = generator.GenerateReport(flattenedClient);
-                foreach (var entry in report)
-                {
-                    Console.WriteLine($"{entry.MetricPath}: {entry.Value} -> {entry.Category}, { (string.IsNullOrEmpty(entry.Explanation) ? "" :$"({entry.Explanation})") }");
-                }
+                clientReportVM.ReportEntries.AddRange(report);
+                clientsReport.Add(clientReportVM);
             }
+            ViewBag.ClientsReport = clientsReport;
             ViewBag.Message = "Processed successfully!";
-            return View();
+            return View(clientsReport);
         }
 
-        //void F1()
-        //{
-        //var flattened = ClientDataFlattener.Flatten(client.MedicalData);
-
-        //foreach (var kv in flattened)
-        //{
-        //Console.WriteLine($"{kv.Key} = {kv.Value}");
-        //}
-        //}
         void UsageExample(GuidelineSet guidelines)
         {
             var bloodSugarValue = 98;

@@ -1,5 +1,10 @@
-﻿@{
+﻿@*@model WebApplication1.ViewModels.ClientReportVM*@
+
+
+@{
     ViewData["Title"] = "Home Page";
+    var clientsReport = (List<WebApplication1.ViewModels.ClientReportVM>)ViewBag.ClientsReport;
+
 }
 
 @if (ViewBag.Warning != null)
@@ -16,10 +21,66 @@
     </div>
 }
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
     <form method="post" enctype="multipart/form-data" asp-action="Index">
         <input type="file" name="files" multiple accept=".json" />
         <button class="btn btn-primary" type="submit">Upload</button>
     </form>
 </div>
 
+
+<div class="row">
+    <div class="col">
+        <div class="card bg-transparent-at">
+            <div class="card-header">
+                <div class="fw-medium">
+                    clients Report
+                </div>
+            </div>
+            <div class="card-body pt-1 pb-1">
+                @if (clientsReport== null || clientsReport.Count == 0)
+                {
+                    <div class="alert alert-info mb-3 mt-3 p-2" role="alert">
+                        <div>
+                            <i class="bi bi-info-circle-fill text-primary"></i> No clinet found
+                        </div>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="table-responsive">
+                        <table class="table table-transparent table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle text-nowrap">Client</th>
+                                    <th class="align-middle text-nowrap">Test Name</th>
+                                    <th class="align-middle text-nowrap">Value</th>
+                                    <th class="align-middle text-nowrap">Category</th>
+                                    <th class="align-middle text-nowrap">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var clientReport in clientsReport)
+                                {
+                                    <tr class="table-secondary fw-bolder">
+                                        <td colspan="5" class="align">@clientReport.Client.Name</td>
+                                    </tr>
+                                    @foreach (var reportEntry in clientReport.ReportEntries)
+                                    {
+                                        <tr>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle">@reportEntry.MetricPath</td>
+                                            <td class="align-middle">@reportEntry.Value</td>
+                                            <td class="align-middle">@reportEntry.Category</td>
+                                            <td class="align-middle">@reportEntry.Explanation</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
