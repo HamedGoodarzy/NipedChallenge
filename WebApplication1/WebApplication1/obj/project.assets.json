@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HamedAbutorabiGudarz\\Desktop\\Tutorials\\NipedChallenge\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
-      "projectName": "WebApplication1",
-      "projectPath": "C:\\Users\\HamedAbutorabiGudarz\\Desktop\\Tutorials\\NipedChallenge\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\Users\\HamedAbutorabiGudarz\\Desktop\\Tutorials\\NipedChallenge\\WebApplication1\\WebApplication1\\NipedWebApp.csproj",
+      "projectName": "NipedWebApp",
+      "projectPath": "C:\\Users\\HamedAbutorabiGudarz\\Desktop\\Tutorials\\NipedChallenge\\WebApplication1\\WebApplication1\\NipedWebApp.csproj",
       "packagesPath": "C:\\Users\\HamedAbutorabiGudarz\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\HamedAbutorabiGudarz\\Desktop\\Tutorials\\NipedChallenge\\WebApplication1\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
