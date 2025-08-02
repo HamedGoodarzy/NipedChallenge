@@ -2,20 +2,20 @@
 {
     public class GuidelineSet
     {
-        public Dictionary<string, CholesterolGuideline> Cholesterol { get; set; }
-        public ValueGuideline BloodSugar { get; set; }
-        public BloodPressureGuideline BloodPressure { get; set; }
-        public ValueGuideline ExerciseWeeklyMinutes { get; set; }
-        public TextGuideline SleepQuality { get; set; }
-        public TextGuideline StressLevels { get; set; }
-        public TextGuideline DietQuality { get; set; }
+        public CholesterolGuideline Cholesterol { get; set; } = new CholesterolGuideline();
+        public ValueGuideline BloodSugar { get; set; } = new ValueGuideline();
+        public BloodPressureGuideline BloodPressure { get; set; } = new BloodPressureGuideline();
+        public ValueGuideline ExerciseWeeklyMinutes { get; set; } = new ValueGuideline();
+        public TextGuideline SleepQuality { get; set; } = new TextGuideline();
+        public TextGuideline StressLevels { get; set; } = new TextGuideline();
+        public TextGuideline DietQuality { get; set; } = new TextGuideline();
     }
 
     public class CholesterolGuideline
     {
-        public ValueGuideline Total { get; set; } 
-        public ValueGuideline Hdl { get; set; }
-        public ValueGuideline Ldl { get; set; }
+        public ValueGuideline Total { get; set; } = new ValueGuideline();
+        public ValueGuideline Hdl { get; set; } = new ValueGuideline();
+        public ValueGuideline Ldl { get; set; } = new ValueGuideline();
     }
 
     public class ValueGuideline
@@ -34,9 +34,9 @@
 
     public class BloodPressureGuideline
     {
-        public BloodPressureThreshold Optimal { get; set; }
-        public BloodPressureThreshold NeedsAttention { get; set; }
-        public BloodPressureThreshold SeriousIssue { get; set; }
+        public BloodPressureThreshold Optimal { get; set; } = new BloodPressureThreshold(); 
+        public BloodPressureThreshold NeedsAttention { get; set; } = new BloodPressureThreshold();
+        public BloodPressureThreshold SeriousIssue { get; set; } = new BloodPressureThreshold();
     }
 
     public class BloodPressureThreshold

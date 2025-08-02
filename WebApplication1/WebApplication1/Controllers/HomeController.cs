@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using WebApplication1.Domain;
 using WebApplication1.Models;
+using WebApplication1.Utilities;
 
 namespace WebApplication1.Controllers
 {
@@ -23,12 +24,16 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(List<IFormFile> files)
         {
+            var gls = new GuidelineSet();
+            //gls.Cholesterol.Add(new CholesterolGuideline());
+            var asJson = JsonSerializer.Serialize(gls);
+
             if (files.Count == 0)
             {
                 ViewBag.Warning = "The file has no content.";
                 return View();
             }
-            using var guidelineReader = new StreamReader(files.First(f=>f.ContentDisposition.Contains("medicalGuidelines.json")).OpenReadStream());
+            using var guidelineReader = new StreamReader(files.First(f => f.ContentDisposition.Contains("medicalGuidelines.json")).OpenReadStream());
             string content = await guidelineReader.ReadToEndAsync();
             var guidelineSet = ProcessGuideLines(content) ?? throw new Exception("Processing guidelines encountered an error!");
             UsageExample(guidelineSet);
@@ -42,16 +47,39 @@ namespace WebApplication1.Controllers
                 PropertyNameCaseInsensitive = true
             };
 
-            var clientList = JsonSerializer.Deserialize<ClientList>(clientsJson, options)?? throw new Exception("processing clientData encountered an error!");
-            var firstClient = clientList.Clients.First();
-            var flattened = ClientDataFlattener.Flatten(firstClient.MedicalData);
+            var clientList = JsonSerializer.Deserialize<ClientList>(clientsJson, options) ?? throw new Exception("processing clientData encountered an error!");
+            //var firstClient = clientList.Clients.First();
+            //var flattenedClient = ClientDataFlattener.Flatten(firstClient.MedicalData);
 
+            //foreach (var client in clientList.Clients)
+            //{
+            //    var data = ClientDataFlattener.Flatten(client.MedicalData);
+            //    Console.WriteLine($"--- {client.Name} ---");
+            //    foreach (var item in data)
+            //        Console.WriteLine($"{item.Key}: {item.Value}");
+            //}
+
+            //var generator = new ReportGenerator(guidelineSet);
+            //var report = generator.GenerateReport(flattenedClient);
+
+            var generator = new ReportGenerator(guidelineSet);
             foreach (var client in clientList.Clients)
             {
-                var data = ClientDataFlattener.Flatten(client.MedicalData);
-                Console.WriteLine($"--- {client.Name} ---");
-                foreach (var item in data)
-                    Console.WriteLine($"{item.Key}: {item.Value}");
+                Console.WriteLine($"Report for {client.Name}:");
+                var flattenedBloodWork = ClientDataFlattener.Flatten(client.MedicalData);
+                //Console.WriteLine($"BloodWork:");
+                var report = generator.GenerateReport(flattenedBloodWork);
+                foreach (var entry in report)
+                {
+                    Console.WriteLine($"{entry.MetricPath}: {entry.Value} -> {entry.Category}");
+                }
+                //var flattenedQuestionnaire = ClientDataFlattener.Flatten(client.MedicalData.Questionnaire);
+                //Console.WriteLine($"Questionnaire:");
+                //report = generator.GenerateReport(flattenedBloodWork);
+                //foreach (var entry in report)
+                //{
+                    //Console.WriteLine($"{entry.MetricPath}: {entry.Value} -> {entry.Category}");
+                //}
             }
 
             ViewBag.Message = "Processed successfully!";
@@ -60,12 +88,12 @@ namespace WebApplication1.Controllers
 
         //void F1()
         //{
-            //var flattened = ClientDataFlattener.Flatten(client.MedicalData);
+        //var flattened = ClientDataFlattener.Flatten(client.MedicalData);
 
-            //foreach (var kv in flattened)
-            //{
-                //Console.WriteLine($"{kv.Key} = {kv.Value}");
-            //}
+        //foreach (var kv in flattened)
+        //{
+        //Console.WriteLine($"{kv.Key} = {kv.Value}");
+        //}
         //}
         void UsageExample(GuidelineSet guidelines)
         {
