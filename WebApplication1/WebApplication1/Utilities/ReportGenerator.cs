@@ -1,4 +1,5 @@
-﻿using WebApplication1.Domain;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using WebApplication1.Domain;
 using WebApplication1.Models;
 
 namespace WebApplication1.Utilities
@@ -25,12 +26,12 @@ namespace WebApplication1.Utilities
                 switch (metric)
                 {
                     //TODO Hamed
-                    //case "bloodwork.cholesterol.total":
-                        //report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol["total"].Total)); break;
-                    //case "bloodwork.cholesterol.hdl":
-                        //report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol["hdl"].Hdl)); break;
-                    //case "bloodwork.cholesterol.ldl":
-                        //report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol["ldl"].Ldl)); break;
+                    case "Bloodwork.Cholesterol.Total":
+                        report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol.Total)); break;
+                    case "Bloodwork.Cholesterol.Hdl":
+                        report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol.Hdl)); break;
+                    case "Bloodwork.Cholesterol.Ldl":
+                        report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol.Ldl)); break;
                     case "Bloodwork.BloodSugar":
                         report.Add(EvaluateNumeric(metric, value, _guidelines.BloodSugar)); break;
                     case "Questionnaire.ExerciseWeeklyMinutes":
@@ -42,6 +43,7 @@ namespace WebApplication1.Utilities
                     case "Questionnaire.DietQuality":
                         report.Add(EvaluateText(metric, value, _guidelines.DietQuality)); break;
                     case "Bloodwork.BloodPressure.systolic":
+                        //report.Add(EvaluateText(metric,value,_guidelines.BloodPressure.
                     case "Bloodwork.BloodPressure.diastolic":
                         // special case handled outside since systolic+diastolic go together
                         break;
@@ -49,8 +51,8 @@ namespace WebApplication1.Utilities
             }
 
             // Handle blood pressure together
-            if (flatData.TryGetValue("bloodwork.bloodPressure.systolic", out var systolicObj) &&
-                flatData.TryGetValue("bloodwork.bloodPressure.diastolic", out var diastolicObj))
+            if (flatData.TryGetValue("Bloodwork.BloodPressure.Systolic", out var systolicObj) &&
+                flatData.TryGetValue("Bloodwork.BloodPressure.Diastolic", out var diastolicObj))
             {
                 var systolic = Convert.ToInt32(systolicObj);
                 var diastolic = Convert.ToInt32(diastolicObj);
@@ -58,7 +60,7 @@ namespace WebApplication1.Utilities
 
                 report.Add(new ReportEntry
                 {
-                    MetricPath = "bloodwork.bloodPressure",
+                    MetricPath = "Bloodwork.BloodPressure",
                     Value = $"{systolic}/{diastolic}",
                     Category = category,
                     Explanation = $"Systolic: {systolic}, Diastolic: {diastolic}"
@@ -77,7 +79,7 @@ namespace WebApplication1.Utilities
                 MetricPath = path,
                 Value = value,
                 Category = category,
-                Explanation = $"{numeric} → {category}"
+                Explanation = $"{numeric} -> {category}"
             };
         }
         private ReportEntry EvaluateText(string path, object value, TextGuideline guideline)
@@ -89,7 +91,7 @@ namespace WebApplication1.Utilities
                 MetricPath = path,
                 Value = str,
                 Category = category,
-                Explanation = $"{str} → {category}"
+                Explanation = $"{str} -> {category}"
             };
         }
     }

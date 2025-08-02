@@ -66,22 +66,13 @@ namespace WebApplication1.Controllers
             foreach (var client in clientList.Clients)
             {
                 Console.WriteLine($"Report for {client.Name}:");
-                var flattenedBloodWork = ClientDataFlattener.Flatten(client.MedicalData);
-                //Console.WriteLine($"BloodWork:");
-                var report = generator.GenerateReport(flattenedBloodWork);
+                var flattenedClient = ClientDataFlattener.Flatten(client.MedicalData);
+                var report = generator.GenerateReport(flattenedClient);
                 foreach (var entry in report)
                 {
-                    Console.WriteLine($"{entry.MetricPath}: {entry.Value} -> {entry.Category}");
+                    Console.WriteLine($"{entry.MetricPath}: {entry.Value} -> {entry.Category}, { (string.IsNullOrEmpty(entry.Explanation) ? "" :$"({entry.Explanation})") }");
                 }
-                //var flattenedQuestionnaire = ClientDataFlattener.Flatten(client.MedicalData.Questionnaire);
-                //Console.WriteLine($"Questionnaire:");
-                //report = generator.GenerateReport(flattenedBloodWork);
-                //foreach (var entry in report)
-                //{
-                    //Console.WriteLine($"{entry.MetricPath}: {entry.Value} -> {entry.Category}");
-                //}
             }
-
             ViewBag.Message = "Processed successfully!";
             return View();
         }
