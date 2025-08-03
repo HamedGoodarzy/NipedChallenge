@@ -2,9 +2,9 @@
 
 namespace WebApplication1.Services
 {
-    public static class RuleEvaluator
+    public class RuleEvaluator : IRuleEvaluator
     {
-        public static string EvaluateBloodPressure(int systolic, int diastolic, BloodPressureGuideline guideline)
+        public string EvaluateBloodPressure(int systolic, int diastolic, BloodPressureGuideline guideline)
         {
             var results = new List<(string Category, bool Matches)>
             {
@@ -14,7 +14,7 @@ namespace WebApplication1.Services
             };
             return results.FirstOrDefault(r => r.Matches).Category ?? "unknown";
         }
-        public static string EvaluateNumeric(double value, ValueGuideline guideline)
+        public string EvaluateNumeric(double value, ValueGuideline guideline)
         {
             if (Matches(value, guideline.SeriousIssue)) return "seriousIssue";
             if (Matches(value, guideline.NeedsAttention)) return "needsAttention";
@@ -22,7 +22,7 @@ namespace WebApplication1.Services
             return "unknown";
         }
 
-        public static bool Matches(double value, string rule)
+        private bool Matches(double value, string rule)
         {
             rule = rule.Trim();
 
@@ -50,12 +50,19 @@ namespace WebApplication1.Services
             }
             return false;
         }
-        public static string EvaluateText(string input, TextGuideline guideline)
+        public string EvaluateText(string input, TextGuideline guideline)
         {
             if (input == guideline.SeriousIssue) return "seriousIssue";
             if (input == guideline.NeedsAttention) return "needsAttention";
             if (input == guideline.Optimal) return "optimal";
             return "unknown";
         }
+    }
+
+    public interface IRuleEvaluator
+    {
+        string EvaluateBloodPressure(int systolic, int diastolic, BloodPressureGuideline guideline);
+        string EvaluateNumeric(double value, ValueGuideline guideline);
+        string EvaluateText(string input, TextGuideline guideline);
     }
 }

@@ -7,7 +7,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ReportProvider>();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

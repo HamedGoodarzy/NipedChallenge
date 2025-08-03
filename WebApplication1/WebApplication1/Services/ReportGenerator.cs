@@ -2,13 +2,15 @@
 
 namespace WebApplication1.Services
 {
-    public class ReportGenerator
+    public class ReportGenerator : IReportGenerator
     {
         private readonly GuidelineSet _guidelines;
+        private readonly IRuleEvaluator _ruleEvaluator;
 
-        public ReportGenerator(GuidelineSet guidelines)
+        public ReportGenerator(GuidelineSet guidelines, IRuleEvaluator ruleEvaluator)
         {
             _guidelines = guidelines;
+            _ruleEvaluator = ruleEvaluator;
         }
 
         public List<ReportEntry> GenerateReport(Dictionary<string, object> flatData)
@@ -54,7 +56,7 @@ namespace WebApplication1.Services
             {
                 var systolic = Convert.ToInt32(systolicObj);
                 var diastolic = Convert.ToInt32(diastolicObj);
-                var category = RuleEvaluator.EvaluateBloodPressure(systolic, diastolic, _guidelines.BloodPressure);
+                var category = _ruleEvaluator.EvaluateBloodPressure(systolic, diastolic, _guidelines.BloodPressure);
 
                 report.Add(new ReportEntry
                 {
@@ -71,7 +73,7 @@ namespace WebApplication1.Services
         private ReportEntry EvaluateNumeric(string path, object value, ValueGuideline guideline)
         {
             var numeric = Convert.ToDouble(value);
-            var category = RuleEvaluator.EvaluateNumeric(numeric, guideline);
+            var category = _ruleEvaluator.EvaluateNumeric(numeric, guideline);
             return new ReportEntry
             {
                 MetricPath = path,
@@ -83,7 +85,7 @@ namespace WebApplication1.Services
         private ReportEntry EvaluateText(string path, object value, TextGuideline guideline)
         {
             var str = value.ToString();
-            var category = RuleEvaluator.EvaluateText(str, guideline);
+            var category = _ruleEvaluator.EvaluateText(str, guideline);
             return new ReportEntry
             {
                 MetricPath = path,
@@ -93,4 +95,10 @@ namespace WebApplication1.Services
             };
         }
     }
+
+    interface IReportGenerator
+    {
+        List<ReportEntry> GenerateReport(Dictionary<string, object> flatData);
+    }
+
 }
