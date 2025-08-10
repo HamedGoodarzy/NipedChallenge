@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NipedWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a93fe9f0f05e9889a0cc9bc7fa3a5eee8ed56d3e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d694a73b1327765dbc36f2036f3174294460b0ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("NipedWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NipedWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

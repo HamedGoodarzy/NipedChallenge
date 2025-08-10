@@ -61,7 +61,6 @@ namespace NipedWebApi.Domain
             foreach (var dbClient in dbClinets)
             {
                 ClientTO clientTO = mapper.Map<ClientTO>(dbClient);
-                //var flattenedClient = ClientDataFlattener.Flatten(client.MedicalData);
                 clientsReportTO.Add(new ClientReportTO()
                 {
                     Client = clientTO,

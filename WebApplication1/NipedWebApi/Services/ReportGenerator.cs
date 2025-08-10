@@ -7,14 +7,12 @@ namespace WebApplication1.Services
     {
         public List<ClientReportEntryTO> GenerateReportEntries(ClientTO clientTO)
         {
-            var reportEnttries = new List<ClientReportEntryTO>();
-            reportEnttries.Add(EvaluateNumeric("Bloodwork.Cholesterol.Total", clientTO.MedicalData.Bloodwork.Cholesterol.Total, guideline.Cholesterol.Total));
-            ////report.Add
-            //{
-                //EvaluateNumeric("Bloodwork.Cholesterol.Total", clientTO.MedicalData.Bloodwork.Cholesterol.Total, guideline.Cholesterol.Total),
-                //EvaluateNumeric("Bloodwork.Cholesterol.Hdl", clientTO.MedicalData.Bloodwork.Cholesterol.Hdl, guideline.Cholesterol.Hdl),
-                //EvaluateNumeric("Bloodwork.Cholesterol.Ldl", clientTO.MedicalData.Bloodwork.Cholesterol.Ldl, guideline.Cholesterol.Ldl),
-            //};
+            var reportEnttries = new List<ClientReportEntryTO>
+            {
+                EvaluateNumeric("Bloodwork.Cholesterol.Total", clientTO.MedicalData.Bloodwork.Cholesterol.Total, guideline.Cholesterol.Total),
+                EvaluateNumeric("Bloodwork.Cholesterol.Hdl", clientTO.MedicalData.Bloodwork.Cholesterol.Hdl, guideline.Cholesterol.Hdl),
+                EvaluateNumeric("Bloodwork.Cholesterol.Ldl", clientTO.MedicalData.Bloodwork.Cholesterol.Ldl, guideline.Cholesterol.Ldl)
+            };
 
             //foreach (var kvp in flatData)
             //{
