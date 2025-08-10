@@ -1,4 +1,5 @@
-﻿using WebApplication1.Models;
+﻿using NipedModel;
+using WebApplication1.Models;
 
 namespace WebApplication1.Services
 {
@@ -14,42 +15,41 @@ namespace WebApplication1.Services
         //    };
         //    return results.FirstOrDefault(r => r.Matches).Category ?? "unknown";
         //}
-        //public string EvaluateNumeric(double value, ValueGuideline guideline)
-        //{
-        //    if (Matches(value, guideline.SeriousIssue)) return "seriousIssue";
-        //    if (Matches(value, guideline.NeedsAttention)) return "needsAttention";
-        //    if (Matches(value, guideline.Optimal)) return "optimal";
-        //    return "unknown";
-        //}
+        public string EvaluateNumeric(double value, ValueGuidelineTO guideline)
+        {
+            if (Matches(value, guideline.SeriousIssue)) return "seriousIssue";
+            if (Matches(value, guideline.NeedsAttention)) return "needsAttention";
+            if (Matches(value, guideline.Optimal)) return "optimal";
+            return "unknown";
+        }
         //
-        //private bool Matches(double value, string rule)
-        //{
-        //    rule = rule.Trim();
-        //
-        //    if (rule.Contains("-"))
-        //    {
-        //        var parts = rule.Split('-');
-        //        if (double.TryParse(parts[0], out var min) && double.TryParse(parts[1], out var max))
-        //            return value >= min && value <= max;
-        //    }
-        //    else if (rule.StartsWith(">="))
-        //    {
-        //        return value >= double.Parse(rule.Substring(2));
-        //    }
-        //    else if (rule.StartsWith("<="))
-        //    {
-        //        return value <= double.Parse(rule.Substring(2));
-        //    }
-        //    else if (rule.StartsWith(">"))
-        //    {
-        //        return value > double.Parse(rule.Substring(1));
-        //    }
-        //    else if (rule.StartsWith("<"))
-        //    {
-        //        return value < double.Parse(rule.Substring(1));
-        //    }
-        //    return false;
-        //}
+        private bool Matches(double value, string rule)
+        {
+            rule = rule.Trim();
+            if (rule.Contains("-"))
+            {
+                var parts = rule.Split('-');
+                if (double.TryParse(parts[0], out var min) && double.TryParse(parts[1], out var max))
+                    return value >= min && value <= max;
+            }
+            else if (rule.StartsWith(">="))
+            {
+                return value >= double.Parse(rule.Substring(2));
+            }
+            else if (rule.StartsWith("<="))
+            {
+                return value <= double.Parse(rule.Substring(2));
+            }
+            else if (rule.StartsWith(">"))
+            {
+                return value > double.Parse(rule.Substring(1));
+            }
+            else if (rule.StartsWith("<"))
+            {
+                return value < double.Parse(rule.Substring(1));
+            }
+            return false;
+        }
         //public string EvaluateText(string input, TextGuideline guideline)
         //{
         //    if (input == guideline.SeriousIssue) return "seriousIssue";
@@ -62,7 +62,7 @@ namespace WebApplication1.Services
     public interface IRuleEvaluator
     {
         //string EvaluateBloodPressure(int systolic, int diastolic, BloodPressureGuideline guideline);
-        //string EvaluateNumeric(double value, ValueGuideline guideline);
+        string EvaluateNumeric(double value, ValueGuidelineTO guideline);
         //string EvaluateText(string input, TextGuideline guideline);
     }
 }

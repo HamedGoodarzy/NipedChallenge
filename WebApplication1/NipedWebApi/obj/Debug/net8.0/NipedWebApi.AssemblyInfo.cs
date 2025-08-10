@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NipedWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd75bff79b9e375eb668d0c2ec1eaaf3b01fdf5a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a93fe9f0f05e9889a0cc9bc7fa3a5eee8ed56d3e")]
 [assembly: System.Reflection.AssemblyProductAttribute("NipedWebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NipedWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

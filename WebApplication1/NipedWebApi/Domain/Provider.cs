@@ -7,6 +7,8 @@ using System.Text.Json;
 using WebApplication1.Helpers;
 using WebApplication1.Services;
 using WebApplication1.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace NipedWebApi.Domain
 {
@@ -48,7 +50,26 @@ namespace NipedWebApi.Domain
             _dbContext.SaveChanges();
             return "Ok";
         }
-
+        public List<ClientReportTO> GetClinetsReport()
+        {
+            List<Client> dbClinets = _dbContext.Clients.Include(c=> c.Bloodwork).Include(c=>c.Questionnaire).ToList();
+            var dbGuideline = _dbContext.Guidelines.Include(g=> g.Cholesterol).ThenInclude(c => c.ValueGuidelines).FirstOrDefault(); 
+            var guidelneTO = mapper.Map<GuidelineTO>(dbGuideline);
+            IRuleEvaluator ruleEvaluator = new RuleEvaluator();
+            IReportGenerator reportGenerator = new ReportGenerator(guidelneTO, ruleEvaluator);
+            var clientsReportTO = new List<ClientReportTO>();
+            foreach (var dbClient in dbClinets)
+            {
+                ClientTO clientTO = mapper.Map<ClientTO>(dbClient);
+                //var flattenedClient = ClientDataFlattener.Flatten(client.MedicalData);
+                clientsReportTO.Add(new ClientReportTO()
+                {
+                    Client = clientTO,
+                    ReportEntries = reportGenerator.GenerateReportEntries(clientTO),
+                });
+            }
+            return clientsReportTO;
+        }
     }
     public interface IProvider
     {

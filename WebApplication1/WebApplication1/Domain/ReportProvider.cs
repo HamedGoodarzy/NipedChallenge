@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using NipedModel;
+using System.Runtime.CompilerServices;
 using WebApplication1.Helpers;
 using WebApplication1.Models;
 using WebApplication1.Services;
@@ -59,6 +60,21 @@ namespace WebApplication1.Domain
                 var result = await restClient.PostAsync<List<ClientReportVM>>("client/register", clientsJsonValue);
                 //TODO
                 return null;
+            }
+            catch (Exception ex)
+            {
+                WriteExceptionLog(ex);
+                throw;
+            }
+        }
+
+        public async Task<List<ClientReportTO>> LoadReport()
+        {
+            try
+            {
+                var result = await restClient.GetAsync<List<ClientReportTO>>("client/report");
+                //TODO
+                return result;
             }
             catch (Exception ex)
             {

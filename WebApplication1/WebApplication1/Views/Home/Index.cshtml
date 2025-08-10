@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    var clientsReport = (List<WebApplication1.ViewModels.ClientReportVM>)ViewBag.ClientsReport;
+    var clientsReport = (List<NipedModel.ClientReportTO>)ViewBag.ClientsReport;
 
 }
 
@@ -32,6 +32,10 @@
                         <form class="mt-1" method="post" enctype="multipart/form-data" asp-action="Index" asp-route-type="clientsData">
                             <input type="file" name="file" accept=".json" />
                             <button class="btn btn-primary" type="submit">Process Clients Data</button>
+                        </form>
+                        <form class="mt-1" method="post" enctype="multipart/form-data" asp-action="Index" asp-route-type="loadReport">
+                            <input type="file" name="file" accept=".json" />
+                            <button class="btn btn-success" type="submit">Load Report</button>
                         </form>
                     </div>
                 </div>

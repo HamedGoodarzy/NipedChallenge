@@ -42,11 +42,11 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(IFormFile file, string type)
         {
-            if (file == null)
-            {
-                ViewBag.Warning = "The file has no content.";
-                return View();
-            }
+            //if (file == null)
+            //{
+            //    ViewBag.Warning = "The file has no content.";
+            //    return View();
+            //}
             if (type == "guideline")
             {
                 await _reportProvider.GenerateGuideline(file);
@@ -54,6 +54,12 @@ namespace WebApplication1.Controllers
             else if (type == "clientsData")
             {
                 await _reportProvider.GenerateClients(file);
+            }
+            else if (type == "loadReport")
+            {
+                var result = await _reportProvider.LoadReport();
+                ViewBag.ClientsReport = result;
+                return View();
             }
             ViewBag.Message = "Processed successfully!";
             return View();

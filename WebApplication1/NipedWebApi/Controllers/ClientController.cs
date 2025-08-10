@@ -11,15 +11,15 @@ namespace NipedWebApi.Controllers
     [Route("[controller]")]
     public class ClientController (ILogger<ClientController> logger, Provider provider) : ControllerBase
     {
-        [HttpGet]
-        [Route("")]
-        public dynamic GetGuideline()
+        [HttpPost]
+        [Route("register")]
+        public string RegisterClientList([FromBody] string clientsAsJson)
         {
             try
             {
-                return provider.GetGuideline();
+                return provider.RegisterClientList(clientsAsJson);
             }
-            //TODO 
+            //TODO
             catch (ArgumentException aex)
             {
                 throw;
@@ -30,13 +30,14 @@ namespace NipedWebApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("register")]
-        public string RegisterClientList([FromBody] string clientsAsJson)
+        [HttpGet]
+        [Route("report")]
+        public List<ClientReportTO> GetClinetsReport()
         {
             try
             {
-                return provider.RegisterClientList(clientsAsJson);
+                var result = provider.GetClinetsReport();
+                return result;
             }
             //TODO
             catch (ArgumentException aex)

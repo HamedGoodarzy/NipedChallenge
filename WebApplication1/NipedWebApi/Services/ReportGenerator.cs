@@ -1,22 +1,21 @@
-﻿using WebApplication1.Models;
+﻿using NipedModel;
+using WebApplication1.Models;
 
 namespace WebApplication1.Services
 {
-    public class ReportGenerator : IReportGenerator
+    public class ReportGenerator (GuidelineTO guideline, IRuleEvaluator ruleEvaluator) : IReportGenerator
     {
-        //private readonly GuidelineSet _guidelines;
-        private readonly IRuleEvaluator _ruleEvaluator;
-
-        //public ReportGenerator(GuidelineSet guidelines, IRuleEvaluator ruleEvaluator)
-        //{
-            //_guidelines = guidelines;
-            //_ruleEvaluator = ruleEvaluator;
-        //}
-
-        public List<ReportEntry> GenerateReport(Dictionary<string, object> flatData)
+        public List<ClientReportEntryTO> GenerateReportEntries(ClientTO clientTO)
         {
-            var report = new List<ReportEntry>();
-            return report;
+            var reportEnttries = new List<ClientReportEntryTO>();
+            reportEnttries.Add(EvaluateNumeric("Bloodwork.Cholesterol.Total", clientTO.MedicalData.Bloodwork.Cholesterol.Total, guideline.Cholesterol.Total));
+            ////report.Add
+            //{
+                //EvaluateNumeric("Bloodwork.Cholesterol.Total", clientTO.MedicalData.Bloodwork.Cholesterol.Total, guideline.Cholesterol.Total),
+                //EvaluateNumeric("Bloodwork.Cholesterol.Hdl", clientTO.MedicalData.Bloodwork.Cholesterol.Hdl, guideline.Cholesterol.Hdl),
+                //EvaluateNumeric("Bloodwork.Cholesterol.Ldl", clientTO.MedicalData.Bloodwork.Cholesterol.Ldl, guideline.Cholesterol.Ldl),
+            //};
+
             //foreach (var kvp in flatData)
             //{
             //    var metric = kvp.Key;
@@ -27,36 +26,36 @@ namespace WebApplication1.Services
             //    {
             //        //TODO Hamed
             //        case "Bloodwork.Cholesterol.Total":
-            //            report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol.Total)); break;
+            //            report.Add(EvaluateNumeric(metric, value, guideline.Cholesterol.Total)); break;
             //        case "Bloodwork.Cholesterol.Hdl":
-            //            report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol.Hdl)); break;
+            //            report.Add(EvaluateNumeric(metric, value, guideline.Cholesterol.Hdl)); break;
             //        case "Bloodwork.Cholesterol.Ldl":
-            //            report.Add(EvaluateNumeric(metric, value, _guidelines.Cholesterol.Ldl)); break;
+            //            report.Add(EvaluateNumeric(metric, value, guideline.Cholesterol.Ldl)); break;
             //        case "Bloodwork.BloodSugar":
-            //            report.Add(EvaluateNumeric(metric, value, _guidelines.BloodSugar)); break;
+            //            report.Add(EvaluateNumeric(metric, value, guideline.BloodSugar)); break;
             //        case "Questionnaire.ExerciseWeeklyMinutes":
-            //            report.Add(EvaluateNumeric(metric, value, _guidelines.ExerciseWeeklyMinutes)); break;
+            //            report.Add(EvaluateNumeric(metric, value, guideline.ExerciseWeeklyMinutes)); break;
             //        case "Questionnaire.SleepQuality":
-            //            report.Add(EvaluateText(metric, value, _guidelines.SleepQuality)); break;
+            //            report.Add(EvaluateText(metric, value, guideline.SleepQuality)); break;
             //        case "Questionnaire.StressLevels":
-            //            report.Add(EvaluateText(metric, value, _guidelines.StressLevels)); break;
+            //            report.Add(EvaluateText(metric, value, guideline.StressLevels)); break;
             //        case "Questionnaire.DietQuality":
-            //            report.Add(EvaluateText(metric, value, _guidelines.DietQuality)); break;
+            //            report.Add(EvaluateText(metric, value, guideline.DietQuality)); break;
             //        case "Bloodwork.BloodPressure.systolic":
-            //            //report.Add(EvaluateText(metric,value,_guidelines.BloodPressure.
+            //        //report.Add(EvaluateText(metric,value,guideline.BloodPressure.
             //        case "Bloodwork.BloodPressure.diastolic":
             //            // special case handled outside since systolic+diastolic go together
             //            break;
             //    }
             //}
-            //
-            //// Handle blood pressure together
+
+            // Handle blood pressure together
             //if (flatData.TryGetValue("Bloodwork.BloodPressure.Systolic", out var systolicObj) &&
             //    flatData.TryGetValue("Bloodwork.BloodPressure.Diastolic", out var diastolicObj))
             //{
             //    var systolic = Convert.ToInt32(systolicObj);
             //    var diastolic = Convert.ToInt32(diastolicObj);
-            //    var category = _ruleEvaluator.EvaluateBloodPressure(systolic, diastolic, _guidelines.BloodPressure);
+            //    var category = _ruleEvaluator.EvaluateBloodPressure(systolic, diastolic, guideline.BloodPressure);
             //
             //    report.Add(new ReportEntry
             //    {
@@ -66,39 +65,39 @@ namespace WebApplication1.Services
             //        Explanation = $"Systolic: {systolic}, Diastolic: {diastolic}"
             //    });
             //}
-            //
-            //return report;
+
+            return reportEnttries;
         }
 
-        //private ReportEntry EvaluateNumeric(string path, object value, ValueGuideline guideline)
-        //{
-            //var numeric = Convert.ToDouble(value);
-            //var category = _ruleEvaluator.EvaluateNumeric(numeric, guideline);
-            //return new ReportEntry
-            //{
-                //MetricPath = path,
-                //Value = value,
-                //Category = category,
-                //Explanation = $"{numeric} -> {category}"
-            //};
-        //}
+        private ClientReportEntryTO EvaluateNumeric(string path, object value, ValueGuidelineTO guideline)
+        {
+            var numeric = Convert.ToDouble(value);
+            var category = ruleEvaluator.EvaluateNumeric(numeric, guideline);
+            return new ClientReportEntryTO
+            {
+                MetricPath = path,
+                Value = value,
+                Category = category,
+                Explanation = $"{numeric} -> {category}"
+            };
+        }
         //private ReportEntry EvaluateText(string path, object value, TextGuideline guideline)
         //{
-            //var str = value.ToString();
-            //var category = _ruleEvaluator.EvaluateText(str, guideline);
-            //return new ReportEntry
-            //{
-                //MetricPath = path,
-                //Value = str,
-                //Category = category,
-                //Explanation = $"{str} -> {category}"
-            //};
+        //    var str = value.ToString();
+        //    var category = _ruleEvaluator.EvaluateText(str, guideline);
+        //    return new ReportEntry
+        //    {
+        //        MetricPath = path,
+        //        Value = str,
+        //        Category = category,
+        //        Explanation = $"{str} -> {category}"
+        //    };
         //}
     }
 
     interface IReportGenerator
     {
-        List<ReportEntry> GenerateReport(Dictionary<string, object> flatData);
+        List<ClientReportEntryTO> GenerateReportEntries(ClientTO clientTO);
     }
 
 }
