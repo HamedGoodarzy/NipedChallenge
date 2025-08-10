@@ -3,11 +3,11 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "WebApplication1\\NipedWebApp.csproj",
+        "Path": "NipedWebApi\\NipedWebApi.csproj",
         "Action": "Start"
       },
       {
-        "Path": "NipedWebApi\\NipedWebApi.csproj",
+        "Path": "NipedWebApp\\NipedWebApp.csproj",
         "Action": "Start"
       }
     ]

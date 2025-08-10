@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    var clientsReport = (List<NipedModel.ClientReportTO>)ViewBag.ClientsReport;
+    var clientsReport = (List<NipedModel.ClientReportTO>)ViewBag.ClientsReport ?? new List<NipedModel.ClientReportTO>(); ;
 
 }
 

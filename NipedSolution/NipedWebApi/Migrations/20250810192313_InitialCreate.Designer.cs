@@ -12,8 +12,8 @@ using NipedWebApi.Data;
 namespace NipedWebApi.Migrations
 {
     [DbContext(typeof(NipedDbContext))]
-    [Migration("20250809224655_MIGRATION-NAME3")]
-    partial class MIGRATIONNAME3
+    [Migration("20250810192313_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,6 +106,10 @@ namespace NipedWebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");

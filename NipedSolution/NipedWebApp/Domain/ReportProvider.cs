@@ -7,42 +7,16 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Domain
 {
-    public class ReportProvider(RestClient restClient) //: IReportProvider
+    public class ReportProvider(RestClient restClient) : IReportProvider
     {
-
-        public async Task<List<ClientReportVM>> GenerateReportOld(List<IFormFile> files)
-        {
-            using var guidelineReader = new StreamReader(files.First(f => f.ContentDisposition.Contains("medicalGuidelines.json")).OpenReadStream());
-            string guidelineJsonValue = await guidelineReader.ReadToEndAsync();
-            var guidelineSet = JsonLoader.LoadJson<Dictionary<string, GuidelineSet>>(guidelineJsonValue)["guidelines"];
-            using var clientsReader = new StreamReader(files.First(f => f.ContentDisposition.Contains("clientData.json")).OpenReadStream());
-            string clientsJsonValue = await clientsReader.ReadToEndAsync();
-            var clientList = JsonLoader.LoadJson<ClientList>(clientsJsonValue);
-
-            IRuleEvaluator ruleEvaluator = new RuleEvaluator();
-            IReportGenerator reportGenerator = new ReportGenerator(guidelineSet, ruleEvaluator);
-            List<ClientReportVM> clientsReportVM = new List<ClientReportVM>();
-            foreach (var client in clientList.Clients)
-            {
-                var flattenedClient = ClientDataFlattener.Flatten(client.MedicalData);
-                clientsReportVM.Add(new ClientReportVM()
-                {
-                    Client = client,
-                    ReportEntries = reportGenerator.GenerateReport(flattenedClient),
-                });
-            }
-            return clientsReportVM;
-        }
-        public async Task<List<ClientReportVM>> GenerateGuideline(IFormFile guidelineFile)
+        public async Task GenerateGuideline(IFormFile guidelineFile)
         {
             try
             {
                 using var guidelineReader = new StreamReader(guidelineFile.OpenReadStream());
                 string guidelineJsonValue = await guidelineReader.ReadToEndAsync();
                 var guidelineSet = JsonLoader.LoadJson<Dictionary<string, GuidelineSet>>(guidelineJsonValue)["guidelines"];
-                var result = await restClient.PostAsync<List<ClientReportVM>>("Guideline/register", guidelineJsonValue);
-                //TODO
-                return null;
+                var result = await restClient.PostAsync<string>("Guideline/register", guidelineJsonValue);
             }
             catch (Exception ex)
             {
@@ -51,15 +25,13 @@ namespace WebApplication1.Domain
             }
         }
 
-        public async Task<List<ClientReportVM>> GenerateClients(IFormFile clientsFile)
+        public async Task GenerateClients(IFormFile clientsFile)
         {
             try
             {
                 using var clientsReader = new StreamReader(clientsFile.OpenReadStream());
                 string clientsJsonValue = await clientsReader.ReadToEndAsync();
-                var result = await restClient.PostAsync<List<ClientReportVM>>("client/register", clientsJsonValue);
-                //TODO
-                return null;
+                var result = await restClient.PostAsync<string>("client/register", clientsJsonValue);
             }
             catch (Exception ex)
             {
@@ -74,7 +46,7 @@ namespace WebApplication1.Domain
             {
                 var result = await restClient.GetAsync<List<ClientReportTO>>("client/report");
                 //TODO
-                return result;
+                return result ?? new List<ClientReportTO>();
             }
             catch (Exception ex)
             {
@@ -90,6 +62,8 @@ namespace WebApplication1.Domain
     }
     public interface IReportProvider
     {
-        Task<List<ClientReportVM>> GenerateReport(List<IFormFile> files);
+        public Task GenerateGuideline(IFormFile guidelineFile);
+        public Task GenerateClients(IFormFile clientsFile);
+        public Task<List<ClientReportTO>> LoadReport();
     }
 }
