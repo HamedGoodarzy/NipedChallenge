@@ -53,7 +53,7 @@ namespace NipedWebApi.Domain
         public List<ClientReportTO> GetClinetsReport()
         {
             List<Client> dbClinets = _dbContext.Clients.Include(c=> c.Bloodwork).Include(c=>c.Questionnaire).ToList();
-            var dbGuideline = _dbContext.Guidelines.Include(g=> g.Cholesterol).ThenInclude(c => c.ValueGuidelines).FirstOrDefault(); 
+            var dbGuideline = _dbContext.Guidelines.Include(g=> g.ValueGuidelines).FirstOrDefault(); 
             var guidelneTO = mapper.Map<GuidelineTO>(dbGuideline);
             IRuleEvaluator ruleEvaluator = new RuleEvaluator();
             IReportGenerator reportGenerator = new ReportGenerator(guidelneTO, ruleEvaluator);

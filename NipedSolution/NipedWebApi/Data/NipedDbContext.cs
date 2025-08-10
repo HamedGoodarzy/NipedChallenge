@@ -25,7 +25,7 @@ namespace NipedWebApi.Data
             modelBuilder.ApplyConfigurationsFromAssembly(modelAss);
         }
         public DbSet<Guideline> Guidelines { get; set; }
-        public DbSet<CholesterolGuideline> CholesterolGuidelines { get; set; }
+        //public DbSet<CholesterolGuideline> CholesterolGuidelines { get; set; }
         public DbSet<ValueGuideline> ValueGuidelines { get; set; }
         //public DbSet<TextGuideline> TextGuidelines { get; set; }
         //public DbSet<BloodPressureGuideline> BloodPressureGuidelines { get; set; }

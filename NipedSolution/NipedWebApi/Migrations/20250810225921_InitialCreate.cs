@@ -96,33 +96,12 @@ namespace NipedWebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CholesterolGuidelines",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GuidelineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Timestamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CholesterolGuidelines", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CholesterolGuidelines_Guidelines_GuidelineId",
-                        column: x => x.GuidelineId,
-                        principalTable: "Guidelines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ValueGuidelines",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CholesterolGuidelineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GuidelineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Optimal = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NeedsAttention = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SeriousIssue = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -134,9 +113,9 @@ namespace NipedWebApi.Migrations
                 {
                     table.PrimaryKey("PK_ValueGuidelines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ValueGuidelines_CholesterolGuidelines_CholesterolGuidelineId",
-                        column: x => x.CholesterolGuidelineId,
-                        principalTable: "CholesterolGuidelines",
+                        name: "FK_ValueGuidelines_Guidelines_GuidelineId",
+                        column: x => x.GuidelineId,
+                        principalTable: "Guidelines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -148,21 +127,15 @@ namespace NipedWebApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CholesterolGuidelines_GuidelineId",
-                table: "CholesterolGuidelines",
-                column: "GuidelineId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Questionnaires_ClientId",
                 table: "Questionnaires",
                 column: "ClientId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ValueGuidelines_CholesterolGuidelineId",
+                name: "IX_ValueGuidelines_GuidelineId",
                 table: "ValueGuidelines",
-                column: "CholesterolGuidelineId");
+                column: "GuidelineId");
         }
 
         /// <inheritdoc />
@@ -179,9 +152,6 @@ namespace NipedWebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clients");
-
-            migrationBuilder.DropTable(
-                name: "CholesterolGuidelines");
 
             migrationBuilder.DropTable(
                 name: "Guidelines");

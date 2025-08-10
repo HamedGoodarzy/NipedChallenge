@@ -6,7 +6,7 @@ namespace NipedWebApi.Data.Model
     public class Guideline : BaseModel
     {
         //public string? TestField { get; set; } 
-        public virtual CholesterolGuideline? Cholesterol { get; set; }
+        public List<ValueGuideline>? ValueGuidelines { get; set; }
 
         //public ValueGuideline BloodSugar { get; set; } = new ValueGuideline();
         //public BloodPressureGuideline BloodPressure { get; set; } = new BloodPressureGuideline();
@@ -20,10 +20,7 @@ namespace NipedWebApi.Data.Model
     {
         public void Configure(EntityTypeBuilder<Guideline> builder)
         {
-            builder.HasOne(e => e.Cholesterol)
-            .WithOne(e => e.Guideline)
-            .HasForeignKey<CholesterolGuideline>(e => e.GuidelineId)
-            .IsRequired();
+            builder.HasMany(a => a.ValueGuidelines).WithOne().HasForeignKey(a => a.GuidelineId).IsRequired(true);
         }
     }
 }

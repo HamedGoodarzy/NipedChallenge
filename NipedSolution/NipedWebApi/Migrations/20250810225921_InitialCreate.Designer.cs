@@ -12,7 +12,7 @@ using NipedWebApi.Data;
 namespace NipedWebApi.Migrations
 {
     [DbContext(typeof(NipedDbContext))]
-    [Migration("20250810192313_InitialCreate")]
+    [Migration("20250810225921_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -70,35 +70,6 @@ namespace NipedWebApi.Migrations
                         .IsUnique();
 
                     b.ToTable("Bloodworks");
-                });
-
-            modelBuilder.Entity("NipedWebApi.Data.Model.CholesterolGuideline", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GuidelineId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuidelineId")
-                        .IsUnique();
-
-                    b.ToTable("CholesterolGuidelines");
                 });
 
             modelBuilder.Entity("NipedWebApi.Data.Model.Client", b =>
@@ -212,15 +183,15 @@ namespace NipedWebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CholesterolGuidelineId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("GuidelineId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NeedsAttention")
                         .IsRequired()
@@ -245,7 +216,7 @@ namespace NipedWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CholesterolGuidelineId");
+                    b.HasIndex("GuidelineId");
 
                     b.ToTable("ValueGuidelines");
                 });
@@ -261,17 +232,6 @@ namespace NipedWebApi.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("NipedWebApi.Data.Model.CholesterolGuideline", b =>
-                {
-                    b.HasOne("NipedWebApi.Data.Model.Guideline", "Guideline")
-                        .WithOne("Cholesterol")
-                        .HasForeignKey("NipedWebApi.Data.Model.CholesterolGuideline", "GuidelineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Guideline");
-                });
-
             modelBuilder.Entity("NipedWebApi.Data.Model.Questionnaire", b =>
                 {
                     b.HasOne("NipedWebApi.Data.Model.Client", "Client")
@@ -285,18 +245,13 @@ namespace NipedWebApi.Migrations
 
             modelBuilder.Entity("NipedWebApi.Data.Model.ValueGuideline", b =>
                 {
-                    b.HasOne("NipedWebApi.Data.Model.CholesterolGuideline", "CholesterolGuideline")
+                    b.HasOne("NipedWebApi.Data.Model.Guideline", "Guideline")
                         .WithMany("ValueGuidelines")
-                        .HasForeignKey("CholesterolGuidelineId")
+                        .HasForeignKey("GuidelineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CholesterolGuideline");
-                });
-
-            modelBuilder.Entity("NipedWebApi.Data.Model.CholesterolGuideline", b =>
-                {
-                    b.Navigation("ValueGuidelines");
+                    b.Navigation("Guideline");
                 });
 
             modelBuilder.Entity("NipedWebApi.Data.Model.Client", b =>
@@ -308,7 +263,7 @@ namespace NipedWebApi.Migrations
 
             modelBuilder.Entity("NipedWebApi.Data.Model.Guideline", b =>
                 {
-                    b.Navigation("Cholesterol");
+                    b.Navigation("ValueGuidelines");
                 });
 #pragma warning restore 612, 618
         }

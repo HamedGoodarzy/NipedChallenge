@@ -11,7 +11,9 @@ namespace WebApplication1.Services
             {
                 EvaluateNumeric("Bloodwork.Cholesterol.Total", clientTO.MedicalData.Bloodwork.Cholesterol.Total, guideline.Cholesterol.Total),
                 EvaluateNumeric("Bloodwork.Cholesterol.Hdl", clientTO.MedicalData.Bloodwork.Cholesterol.Hdl, guideline.Cholesterol.Hdl),
-                EvaluateNumeric("Bloodwork.Cholesterol.Ldl", clientTO.MedicalData.Bloodwork.Cholesterol.Ldl, guideline.Cholesterol.Ldl)
+                EvaluateNumeric("Bloodwork.Cholesterol.Ldl", clientTO.MedicalData.Bloodwork.Cholesterol.Ldl, guideline.Cholesterol.Ldl),
+                EvaluateNumeric("Bloodwork.BloodSugar", clientTO.MedicalData.Bloodwork.BloodSugar, guideline.BloodSugar),
+                EvaluateNumeric("Questionnaire.ExerciseWeeklyMinutes", clientTO.MedicalData.Questionnaire.ExerciseWeeklyMinutes, guideline.ExerciseWeeklyMinutes),
             };
 
             //foreach (var kvp in flatData)
@@ -79,18 +81,18 @@ namespace WebApplication1.Services
                 Explanation = $"{numeric} -> {category}"
             };
         }
-        //private ReportEntry EvaluateText(string path, object value, TextGuideline guideline)
-        //{
-        //    var str = value.ToString();
-        //    var category = _ruleEvaluator.EvaluateText(str, guideline);
-        //    return new ReportEntry
-        //    {
-        //        MetricPath = path,
-        //        Value = str,
-        //        Category = category,
-        //        Explanation = $"{str} -> {category}"
-        //    };
-        //}
+        private ClientReportEntryTO EvaluateText(string path, object value, ValueGuidelineTO guideline)
+        {
+            var str = value.ToString()?? "";
+            var category = ruleEvaluator.EvaluateText(str, guideline);
+            return new ClientReportEntryTO
+            {
+                MetricPath = path,
+                Value = str,
+                Category = category,
+                Explanation = $"{str} -> {category}"
+            };
+        }
     }
 
     interface IReportGenerator
