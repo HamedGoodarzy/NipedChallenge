@@ -5,3 +5,10 @@
 /.vs
 /WebApplication1/.vs
 /WebApplication2/.vs/WebApplication2/FileContentIndex/775bff97-f468-45b4-8555-fd8148ad3065.vsidx
+/NipedSolution/.vs
+/NipedSolution/NipedModel/bin/Debug/net8.0
+/NipedSolution/NipedModel/obj
+/NipedSolution/NipedWebApi/bin/Debug/net8.0
+/NipedSolution/NipedWebApi/obj
+/NipedSolution/NipedWebApp/bin/Debug/net8.0
+/NipedSolution/NipedWebApp/obj
