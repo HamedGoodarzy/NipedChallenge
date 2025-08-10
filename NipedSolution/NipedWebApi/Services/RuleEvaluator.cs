@@ -51,7 +51,7 @@ namespace WebApplication1.Services
             return false;
         }
         public string EvaluateText(string input, ValueGuidelineTO guideline)
-        {
+        {   
             if (input == guideline.SeriousIssue) return "seriousIssue";
             if (input == guideline.NeedsAttention) return "needsAttention";
             if (input == guideline.Optimal) return "optimal";

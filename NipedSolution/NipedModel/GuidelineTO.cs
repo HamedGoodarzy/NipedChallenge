@@ -6,9 +6,9 @@
         public ValueGuidelineTO BloodSugar { get; set; } = new ValueGuidelineTO();
         public BloodPressureGuidelineTO BloodPressure { get; set; } = new BloodPressureGuidelineTO();
         public ValueGuidelineTO ExerciseWeeklyMinutes { get; set; } = new ValueGuidelineTO();
-        public TextGuidelineTO SleepQuality { get; set; } = new TextGuidelineTO();
-        public TextGuidelineTO StressLevels { get; set; } = new TextGuidelineTO();
-        public TextGuidelineTO DietQuality { get; set; } = new TextGuidelineTO();
+        public ValueGuidelineTO SleepQuality { get; set; } = new ValueGuidelineTO();
+        public ValueGuidelineTO StressLevels { get; set; } = new ValueGuidelineTO();
+        public ValueGuidelineTO DietQuality { get; set; } = new ValueGuidelineTO();
     }
 
     public class CholesterolGuidelineTO
@@ -25,12 +25,12 @@
         public string SeriousIssue { get; set; } = string.Empty;
     }
 
-    public class TextGuidelineTO
-    {
-        public string Optimal { get; set; } = string.Empty;
-        public string NeedsAttention { get; set; } = string.Empty;
-        public string SeriousIssue { get; set; } = string.Empty;
-    }
+    //public class TextGuidelineTO
+    //{
+    //    public string Optimal { get; set; } = string.Empty;
+    //    public string NeedsAttention { get; set; } = string.Empty;
+    //    public string SeriousIssue { get; set; } = string.Empty;
+    //}
 
     public class BloodPressureGuidelineTO
     {

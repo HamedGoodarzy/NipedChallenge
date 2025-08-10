@@ -14,6 +14,9 @@ namespace WebApplication1.Services
                 EvaluateNumeric("Bloodwork.Cholesterol.Ldl", clientTO.MedicalData.Bloodwork.Cholesterol.Ldl, guideline.Cholesterol.Ldl),
                 EvaluateNumeric("Bloodwork.BloodSugar", clientTO.MedicalData.Bloodwork.BloodSugar, guideline.BloodSugar),
                 EvaluateNumeric("Questionnaire.ExerciseWeeklyMinutes", clientTO.MedicalData.Questionnaire.ExerciseWeeklyMinutes, guideline.ExerciseWeeklyMinutes),
+                EvaluateText("Questionnaire.SleepQuality", clientTO.MedicalData.Questionnaire.SleepQuality, guideline.SleepQuality),
+                EvaluateText("Questionnaire.DietQuality", clientTO.MedicalData.Questionnaire.DietQuality, guideline.DietQuality),
+                EvaluateText("Questionnaire.StressLevels", clientTO.MedicalData.Questionnaire.StressLevels, guideline.StressLevels),
             };
 
             //foreach (var kvp in flatData)

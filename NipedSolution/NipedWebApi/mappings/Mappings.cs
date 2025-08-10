@@ -125,10 +125,10 @@ namespace NipedWebApi.mappings
                 Ldl = MapValue(src, "Cholesterol.Ldl")
             }))
             .ForMember(dest => dest.BloodSugar, opt => opt.MapFrom(src => MapValue(src, "BloodSugar")))
-            .ForMember(dest => dest.ExerciseWeeklyMinutes, opt => opt.MapFrom(src => MapValue(src, "ExerciseWeeklyMinutes")));
-            //.ForMember(dest => dest.SleepQuality, opt => opt.MapFrom(src => MapValue(src, "SleepQuality")));
-            //.ForMember(dest => dest.StressLevels, opt => opt.MapFrom(src => MapValue(src, "StressLevels")))
-            //.ForMember(dest => dest.DietQuality, opt => opt.MapFrom(src => MapValue(src, "DietQuality")));
+            .ForMember(dest => dest.ExerciseWeeklyMinutes, opt => opt.MapFrom(src => MapValue(src, "ExerciseWeeklyMinutes")))
+            .ForMember(dest => dest.SleepQuality, opt => opt.MapFrom(src => MapValue(src, "SleepQuality")))
+            .ForMember(dest => dest.StressLevels, opt => opt.MapFrom(src => MapValue(src, "StressLevels")))
+            .ForMember(dest => dest.DietQuality, opt => opt.MapFrom(src => MapValue(src, "DietQuality")));
 
 
 
