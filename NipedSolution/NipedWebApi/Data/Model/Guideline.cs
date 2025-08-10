@@ -26,49 +26,4 @@ namespace NipedWebApi.Data.Model
             .IsRequired();
         }
     }
-    public class CholesterolGuideline : BaseModel
-    {
-        public Guid GuidelineId { get; set; }
-        public Guideline Guideline { get; set; }
-        public List<ValueGuideline> ValueGuidelines { get; set; } = [];
-    }
-    public class CholesterolGuidelineConfiguration : EntityTypeConfiguration<CholesterolGuideline>
-    {
-        public void Configure(EntityTypeBuilder<CholesterolGuideline> builder)
-        {
-            builder.HasMany(a => a.ValueGuidelines).WithOne().HasForeignKey(a => a.CholesterolGuidelineId).IsRequired(true);
-        }
-    }
-
-
-    public class ValueGuideline : BaseModel
-    {
-        public Guid CholesterolGuidelineId { get; set; }
-        public CholesterolGuideline CholesterolGuideline { get; set; }
-
-        public string Label { get; set; } = string.Empty;
-        public string Optimal { get; set; } = string.Empty;
-        public string NeedsAttention { get; set; } = string.Empty;
-        public string SeriousIssue { get; set; } = string.Empty;
-    }
-
-    public class TextGuideline : BaseModel
-    {
-        public string Optimal { get; set; } = string.Empty;
-        public string NeedsAttention { get; set; } = string.Empty;
-        public string SeriousIssue { get; set; } = string.Empty;
-    }
-
-    //public class BloodPressureGuideline : BaseModel
-    //{
-        //public BloodPressureThreshold Optimal { get; set; } = new BloodPressureThreshold();
-        //public BloodPressureThreshold NeedsAttention { get; set; } = new BloodPressureThreshold();
-        //public BloodPressureThreshold SeriousIssue { get; set; } = new BloodPressureThreshold();
-    //}
-
-    //public class BloodPressureThreshold : BaseModel
-    //{
-        //public string Systolic { get; set; } = string.Empty;
-        //public string Diastolic { get; set; } = string.Empty;
-    //}
 }

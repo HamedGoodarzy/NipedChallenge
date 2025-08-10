@@ -28,40 +28,4 @@ namespace NipedWebApi.Data.Model
             .IsRequired();
         }
     }
-
-    public class Bloodwork : BaseModel
-    {
-        public Guid ClientId { get; set; } 
-        public Client Client { get; set; } 
-        public int CholesterolTotal { get; set; }
-        public int CholesterolHdl { get; set; }
-        public int CholesterolLdl { get; set; }
-        public int BloodSugar { get; set; }
-        public int BloodPressureSystolic { get; set; }
-        public int BloodPressureDiastolic { get; set; }
-
-    }
-    public class BloodworkConfiguration : EntityTypeConfiguration<Bloodwork>
-    {
-        public void Configure(EntityTypeBuilder<Bloodwork> builder)
-        {
-        }
-    }
-
-    public class Questionnaire : BaseModel
-    {
-        public Guid ClientId { get; set; } 
-        public Client Client { get; set; }
-        public int ExerciseWeeklyMinutes { get; set; }
-        public string SleepQuality { get; set; }
-        public string StressLevels { get; set; }
-        public string DietQuality { get; set; }
-
-    }
-    public class QuestionnaireConfiguration : EntityTypeConfiguration<Questionnaire>
-    {
-        public void Configure(EntityTypeBuilder<Questionnaire> builder)
-        {
-        }
-    }
 }
