@@ -25,16 +25,36 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Index(List<IFormFile> files)
+        //{
+        //    if (files.Count == 0)
+        //    {
+        //        ViewBag.Warning = "The file has no content.";
+        //        return View();
+        //    }
+            
+        //    ViewBag.ClientsReport = await _reportProvider.GenerateReportOld(files);
+        //    ViewBag.Message = "Processed successfully!";
+        //    return View();
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> Index(List<IFormFile> files)
+        public async Task<IActionResult> Index(IFormFile file, string type)
         {
-            if (files.Count == 0)
+            if (file == null)
             {
                 ViewBag.Warning = "The file has no content.";
                 return View();
             }
-            
-            ViewBag.ClientsReport = await _reportProvider.GenerateReport(files);
+            if (type == "guideline")
+            {
+                await _reportProvider.GenerateGuideline(file);
+            }
+            else if (type == "clientsData")
+            {
+                await _reportProvider.GenerateClients(file);
+            }
             ViewBag.Message = "Processed successfully!";
             return View();
         }

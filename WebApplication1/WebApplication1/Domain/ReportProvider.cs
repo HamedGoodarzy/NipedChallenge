@@ -1,13 +1,15 @@
-﻿using WebApplication1.Helpers;
+﻿using System.Runtime.CompilerServices;
+using WebApplication1.Helpers;
 using WebApplication1.Models;
 using WebApplication1.Services;
 using WebApplication1.ViewModels;
 
 namespace WebApplication1.Domain
 {
-    public class ReportProvider : IReportProvider
+    public class ReportProvider(RestClient restClient) //: IReportProvider
     {
-        public async Task<List<ClientReportVM>> GenerateReport(List<IFormFile> files)
+
+        public async Task<List<ClientReportVM>> GenerateReportOld(List<IFormFile> files)
         {
             using var guidelineReader = new StreamReader(files.First(f => f.ContentDisposition.Contains("medicalGuidelines.json")).OpenReadStream());
             string guidelineJsonValue = await guidelineReader.ReadToEndAsync();
@@ -30,8 +32,47 @@ namespace WebApplication1.Domain
             }
             return clientsReportVM;
         }
+        public async Task<List<ClientReportVM>> GenerateGuideline(IFormFile guidelineFile)
+        {
+            try
+            {
+                using var guidelineReader = new StreamReader(guidelineFile.OpenReadStream());
+                string guidelineJsonValue = await guidelineReader.ReadToEndAsync();
+                var guidelineSet = JsonLoader.LoadJson<Dictionary<string, GuidelineSet>>(guidelineJsonValue)["guidelines"];
+                var result = await restClient.PostAsync<List<ClientReportVM>>("Guideline/register", guidelineJsonValue);
+                //TODO
+                return null;
+            }
+            catch (Exception ex)
+            {
+                WriteExceptionLog(ex);
+                throw;
+            }
+        }
+
+        public async Task<List<ClientReportVM>> GenerateClients(IFormFile clientsFile)
+        {
+            try
+            {
+                using var clientsReader = new StreamReader(clientsFile.OpenReadStream());
+                string clientsJsonValue = await clientsReader.ReadToEndAsync();
+                var result = await restClient.PostAsync<List<ClientReportVM>>("client/register", clientsJsonValue);
+                //TODO
+                return null;
+            }
+            catch (Exception ex)
+            {
+                WriteExceptionLog(ex);
+                throw;
+            }
+        }
+
+        private void WriteExceptionLog(Exception ex)
+        {
+            //TODO
+        }
     }
-    interface IReportProvider
+    public interface IReportProvider
     {
         Task<List<ClientReportVM>> GenerateReport(List<IFormFile> files);
     }

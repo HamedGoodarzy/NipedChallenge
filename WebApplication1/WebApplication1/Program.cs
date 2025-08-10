@@ -6,6 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ReportProvider>();
+builder.Services.AddScoped<RestClient>();
+
+
+WebApplication1.Constants.ApiBaseUrl = builder.Configuration.GetSection("NipedWebApi:RestClientBaseUrl").Get<string>();
+
 
 var app = builder.Build();
 

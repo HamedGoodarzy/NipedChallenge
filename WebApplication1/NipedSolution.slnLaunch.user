@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "WebApplication1\\NipedWebApp.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "NipedWebApi\\NipedWebApi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

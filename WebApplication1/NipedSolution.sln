@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NipedWebApp", "WebApplication1\NipedWebApp.csproj", "{8003D6E8-371C-4E39-9314-B2CA1811B686}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NipedModel", "NipedModel\NipedModel.csproj", "{F5C101CC-3246-4BF6-9DF4-8106B53A41C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NipedWebApi", "NipedWebApi\NipedWebApi.csproj", "{ABFE0956-7CF1-484E-9ED1-A1A4F40DAA8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8003D6E8-371C-4E39-9314-B2CA1811B686}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8003D6E8-371C-4E39-9314-B2CA1811B686}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8003D6E8-371C-4E39-9314-B2CA1811B686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C101CC-3246-4BF6-9DF4-8106B53A41C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C101CC-3246-4BF6-9DF4-8106B53A41C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C101CC-3246-4BF6-9DF4-8106B53A41C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C101CC-3246-4BF6-9DF4-8106B53A41C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABFE0956-7CF1-484E-9ED1-A1A4F40DAA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFE0956-7CF1-484E-9ED1-A1A4F40DAA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFE0956-7CF1-484E-9ED1-A1A4F40DAA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFE0956-7CF1-484E-9ED1-A1A4F40DAA8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

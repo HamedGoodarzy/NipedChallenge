@@ -1,0 +1,6 @@
+@NipedWebApi_HostAddress = http://localhost:5195
+
+GET {{NipedWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
