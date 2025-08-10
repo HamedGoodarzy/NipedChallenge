@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<ReportProvider>();
+builder.Services.AddScoped<IReportProvider,ReportProvider>();
 builder.Services.AddScoped<RestClient>();
 
 

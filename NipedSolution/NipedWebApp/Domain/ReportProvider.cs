@@ -1,9 +1,4 @@
 ﻿using NipedModel;
-using System.Runtime.CompilerServices;
-using WebApplication1.Helpers;
-using WebApplication1.Models;
-using WebApplication1.Services;
-using WebApplication1.ViewModels;
 
 namespace WebApplication1.Domain
 {
@@ -15,7 +10,6 @@ namespace WebApplication1.Domain
             {
                 using var guidelineReader = new StreamReader(guidelineFile.OpenReadStream());
                 string guidelineJsonValue = await guidelineReader.ReadToEndAsync();
-                var guidelineSet = JsonLoader.LoadJson<Dictionary<string, GuidelineSet>>(guidelineJsonValue)["guidelines"];
                 var result = await restClient.PostAsync<string>("Guideline/register", guidelineJsonValue);
             }
             catch (Exception ex)
@@ -45,7 +39,6 @@ namespace WebApplication1.Domain
             try
             {
                 var result = await restClient.GetAsync<List<ClientReportTO>>("client/report");
-                //TODO
                 return result ?? new List<ClientReportTO>();
             }
             catch (Exception ex)

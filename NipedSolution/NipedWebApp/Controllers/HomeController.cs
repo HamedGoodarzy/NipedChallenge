@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Text.Json;
 using WebApplication1.Domain;
-using WebApplication1.Helpers;
 using WebApplication1.Models;
-using WebApplication1.Services;
-using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
@@ -13,8 +9,8 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private ReportProvider _reportProvider;
-        public HomeController(ILogger<HomeController> logger, ReportProvider reportProvider)
+        private IReportProvider _reportProvider;
+        public HomeController(ILogger<HomeController> logger, IReportProvider reportProvider)
         {
             _logger = logger;
             _reportProvider = reportProvider;
@@ -56,12 +52,13 @@ namespace WebApplication1.Controllers
             if (type == "guideline")
             {
                 await _reportProvider.GenerateGuideline(file);
+                ViewBag.Message = "Guideline Processed successfully!";
             }
             else if (type == "clientsData")
             {
                 await _reportProvider.GenerateClients(file);
+                ViewBag.Message = "Clients Data Processed successfully!";
             }
-            ViewBag.Message = "Processed successfully!";
             return View();
         }
 
