@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NipedWebApi.Data;
 using NipedWebApi.Domain;
 using NipedWebApi.mappings;
+using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,11 @@ builder.Services.AddDbContext<NipedDbContext>(db =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddScoped<Provider>();
+builder.Services.AddScoped<IBaseInfoProvider, BaseInfoProvider>();
+builder.Services.AddScoped<IReportProvider, ReportProvider>();
+builder.Services.AddScoped<IClientProvider, ClientProvider>();
+builder.Services.AddScoped<IRuleEvaluator, RuleEvaluator>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

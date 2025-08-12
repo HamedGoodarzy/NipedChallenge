@@ -12,7 +12,7 @@ using NipedWebApi.Data;
 namespace NipedWebApi.Migrations
 {
     [DbContext(typeof(NipedDbContext))]
-    [Migration("20250810225921_InitialCreate")]
+    [Migration("20250811135328_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

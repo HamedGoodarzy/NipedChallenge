@@ -9,7 +9,7 @@ namespace NipedWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GuidelineController (ILogger<GuidelineController> logger, Provider provider) : ControllerBase
+    public class GuidelineController (ILogger<GuidelineController> logger, IBaseInfoProvider provider) : ControllerBase
     {
         [HttpGet]
         [Route("")]

@@ -38,7 +38,7 @@ namespace WebApplication1.Domain
         {
             try
             {
-                var result = await restClient.GetAsync<List<ClientReportTO>>("client/report");
+                var result = await restClient.GetAsync<List<ClientReportTO>>("Report/clientsList");
                 return result ?? new List<ClientReportTO>();
             }
             catch (Exception ex)

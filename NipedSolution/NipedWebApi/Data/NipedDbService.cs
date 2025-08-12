@@ -1,16 +1,10 @@
 ﻿namespace NipedWebApi.Data
 {
-    public class NipedDbService : INipedDbService
+    public class NipedDbService (NipedDbContext db): INipedDbService
     {
-        private readonly NipedDbContext _db;
-        public NipedDbService(NipedDbContext db)
-        {
-            _db = db;
-        }
-
         public NipedDbContext DbContext()
         {
-            return _db;
+            return db;
         }
     }
 

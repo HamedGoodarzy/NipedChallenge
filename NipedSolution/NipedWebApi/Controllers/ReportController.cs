@@ -9,17 +9,21 @@ namespace NipedWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClientController (ILogger<ClientController> logger, IClientProvider provider) : ControllerBase
+    public class ReportController (ILogger<ClientController> logger, IReportProvider provider) : ControllerBase
     {
-        [HttpPost]
-        [Route("register")]
-        public string RegisterClientList([FromBody] string clientsAsJson)
+
+
+        [HttpGet]
+        [Route("clientsList")]
+        public List<ClientReportTO> GetClinetsReport()
         {
             try
             {
-                return provider.RegisterClientList(clientsAsJson);
+                var result = provider.GetClinetsReport();
+                return result;
             }
             //TODO
+
             catch (ArgumentException aex)
             {
                 throw;
