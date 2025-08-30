@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NipedWebApi.Data;
 using NipedWebApi.Domain;
+using NipedWebApi.Domain.Validations;
 using NipedWebApi.mappings;
 using NipedWebApi.MiddleWares;
 using Serilog;
@@ -60,7 +61,7 @@ builder.Services.AddScoped<IBaseInfoProvider, BaseInfoProvider>();
 builder.Services.AddScoped<IReportProvider, ReportProvider>();
 builder.Services.AddScoped<IClientProvider, ClientProvider>();
 builder.Services.AddScoped<IRuleEvaluator, RuleEvaluator>();
-
+builder.Services.AddScoped<IClientValidator, ClientValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
