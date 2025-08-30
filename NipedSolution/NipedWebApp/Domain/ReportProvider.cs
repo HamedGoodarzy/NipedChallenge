@@ -34,11 +34,11 @@ namespace WebApplication1.Domain
             }
         }
 
-        public async Task<List<ClientReportTO>> LoadReport()
+        public async Task<List<ClientReportTO>> LoadReportV2()
         {
             try
             {
-                var result = await restClient.GetAsync<List<ClientReportTO>>("Report/clientsList");
+                var result = await restClient.GetAsync<List<ClientReportTO>>("Report/clientsListV2");
                 return result ?? new List<ClientReportTO>();
             }
             catch (Exception ex)
@@ -52,11 +52,27 @@ namespace WebApplication1.Domain
         {
             //TODO
         }
+
+        public async Task<List<ClientReportTO>> LoadReportV1()
+        {
+            try
+            {
+                var result = await restClient.GetAsync<List<ClientReportTO>>("Report/clientsListV1");
+                return result ?? new List<ClientReportTO>();
+            }
+            catch (Exception ex)
+            {
+                WriteExceptionLog(ex);
+                throw;
+            }
+        }
+
     }
     public interface IReportProvider
     {
         public Task GenerateGuideline(IFormFile guidelineFile);
         public Task GenerateClients(IFormFile clientsFile);
-        public Task<List<ClientReportTO>> LoadReport();
+        public Task<List<ClientReportTO>> LoadReportV1();
+        public Task<List<ClientReportTO>> LoadReportV2();
     }
 }

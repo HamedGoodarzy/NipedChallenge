@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using NipedModel;
 using NipedWebApi.Domain;
-using System.Net;
-using WebApplication1.ViewModels;
 
 namespace NipedWebApi.Controllers
 {

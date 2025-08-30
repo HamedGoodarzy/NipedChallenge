@@ -3,6 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using NipedWebApi.Data;
 using NipedWebApi.Domain;
 using NipedWebApi.mappings;
+using NipedWebApi.MiddleWares;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Compact;
+using Serilog.Formatting.Json;
+using System.Configuration;
 using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,14 +21,36 @@ var builder = WebApplication.CreateBuilder(args);
     - Scoped objects are the same within a request, but different across different requests.
     - Singleton objects are the same for every object and every request.
  */
+var connectionString = builder.Configuration.GetSection("Niped:DatabaseConnectionString").Get<string>() ?? "";
 
 builder.Services.AddScoped<INipedDbService, NipedDbService>();
 builder.Services.AddDbContext<NipedDbContext>(db =>
 {
-    db.UseSqlServer(builder.Configuration.GetSection("Niped:DatabaseConnectionString").Get<string>() ?? "");
+    db.UseSqlServer(connectionString);
 }, ServiceLifetime.Scoped);
 // Add services to the container.
 
+
+//Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning) // Less noise from framework
+    .Enrich.FromLogContext()
+    .WriteTo.Console(new JsonFormatter())
+    .WriteTo.Debug()
+    .WriteTo.File("c:\\Logs.txt"/*, rollingInterval:RollingInterval.Day*/)
+    .WriteTo.MSSqlServer(
+        connectionString: connectionString,
+        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+        {
+            TableName = "Logs",
+            AutoCreateSqlTable = true,
+            AutoCreateSqlDatabase = true,
+        })
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Replace built-in logging
 
 
 builder.Services.AddControllers();
@@ -52,5 +80,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();

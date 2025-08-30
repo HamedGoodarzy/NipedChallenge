@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NipedModel;
 using NipedWebApi.Domain;
-using System.Net;
-using WebApplication1.ViewModels;
 
 namespace NipedWebApi.Controllers
 {
@@ -11,15 +8,14 @@ namespace NipedWebApi.Controllers
     [Route("[controller]")]
     public class ReportController (ILogger<ClientController> logger, IReportProvider provider) : ControllerBase
     {
-
-
         [HttpGet]
-        [Route("clientsList")]
-        public List<ClientReportTO> GetClinetsReport()
+        [Route("clientsListV2")]
+        public List<ClientReportTO> GetClinetsReportV2()
         {
             try
             {
-                var result = provider.GetClinetsReport();
+                var result = provider.GetClinetsReportV2();
+                logger.LogInformation("Loaded clients report at {Time}", DateTime.UtcNow);
                 return result;
             }
             //TODO
@@ -33,5 +29,29 @@ namespace NipedWebApi.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("clientsListV1")]
+        public List<ClientReportTO> GetClinetsReportV1()
+        {
+            try
+            {
+                var result = provider.GetClinetsReportV1();
+                return result;
+            }
+            //TODO
+
+            catch (ArgumentException aex)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+
     }
 }

@@ -38,9 +38,15 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(IFormFile file, string type)
         {
-            if (type == "loadReport")
+            if (type == "loadReportV1")
             {
-                var result = await _reportProvider.LoadReport();
+                var result = await _reportProvider.LoadReportV1();
+                ViewBag.ClientsReport = result;
+                return View();
+            }
+            else if (type == "loadReportV2")
+            {
+                var result = await _reportProvider.LoadReportV2();
                 ViewBag.ClientsReport = result;
                 return View();
             }

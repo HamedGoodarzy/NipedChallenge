@@ -16,7 +16,11 @@ namespace NipedWebApi.Domain
                 return dbService.DbContext();
             }
         }
-        public List<ClientReportTO> GetClinetsReport()
+        public List<ClientReportTO> GetClinetsReportV1()
+        {
+            throw new NotImplementedException("This method is deprecated. Use GetClinetsReport instead.");
+        }
+        public List<ClientReportTO> GetClinetsReportV2()
         {
             List<Client> dbClinets = _dbContext.Clients.Include(c=> c.Bloodwork).Include(c=>c.Questionnaire).ToList();
             var dbGuideline = _dbContext.Guidelines.Include(g=> g.ValueGuidelines).FirstOrDefault(); 
@@ -37,6 +41,7 @@ namespace NipedWebApi.Domain
     }
     public interface IReportProvider
     {
-        public List<ClientReportTO> GetClinetsReport();
+        public List<ClientReportTO> GetClinetsReportV1();
+        public List<ClientReportTO> GetClinetsReportV2();
     }
 }

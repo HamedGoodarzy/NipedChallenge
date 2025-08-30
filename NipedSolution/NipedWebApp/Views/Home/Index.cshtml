@@ -23,7 +23,7 @@
         <div class="card bg-transparent-at">
             
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="fw-bold mb-0">Clients Report</h5>
+                <h5 class="fw-bold mb-0">@*Clients Report*@</h5>
 
                 <div class="d-flex gap-2">
                     <form method="post" enctype="multipart/form-data" asp-action="Index" asp-route-type="guideline">
@@ -40,7 +40,10 @@
                         </div>
                     </form>
 
-                    <form method="post" asp-action="Index" asp-route-type="loadReport">
+                    <form method="post" asp-action="Index" asp-route-type="loadReportV1">
+                        <button class="btn btn-success btn-sm" style="height: 31px;" type="submit">Load Report ( depricate, test)</button>
+                    </form>
+                    <form method="post" asp-action="Index" asp-route-type="loadReportV2">
                         <button class="btn btn-success btn-sm" style="height: 31px;" type="submit">Load Report</button>
                     </form>
                 </div>
